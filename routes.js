@@ -34,6 +34,10 @@ module.exports = function (app) {
     app.get('/get-dept-by-id/:id', requireAuth, center.getDeptById)
     app.get('/get-dept-all', requireAuth, center.getDeptAll)
 
+    // เกี่ยวกับ Plan
+    app.get('/get-plan-all', requireAuth, center.getPlanAll)
+    // app.get('/get-plan-by-id/:id', requireAuth, center.getPlanById)
+
     //------------------------------------- backend Konthorn Thonsap ----------------------------------
 
 
