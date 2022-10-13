@@ -260,4 +260,35 @@ exports.getPlanAll = (req, res, next) => {
         }
     })
 }
+
+exports.insPlan = async (req, res, next) => {
+    let { body } = req
+    const date = moment().format('Y-M-D H:mm:ss')
+    // console.log(body)
+    let data = {
+        'aph_ministry_strategy': body.ministry_strategy,
+        'aph_policy': body.policy,
+        'aph_kpi': body.kpi,
+        'aph_strategy': body.strategy,
+        'aph_result': body.result,
+        'aph_project': body.project,
+        'aph_total_budget': body.total_budget,
+        'aph_period': body.period,
+        'aph_responsible_agency': body.responsible_agency,
+        'aph_insBy': body.insBy,
+        'aph_insDt': date,
+        'aph_status': 0,
+    }
+
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        connection.query(`
+        INSERT INTO add_plan_head set ?`, data, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results })
+        });
+    });
+}
+
 //------------------------------------------------------------------------------------------------------------------------------------ จบ เกี่ยวกับ plan
