@@ -261,6 +261,23 @@ exports.getPlanAll = (req, res, next) => {
     })
 }
 
+exports.getPlanById = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM add_plan_head WHERE id = '${req.params.id}'`
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+
+
 exports.insPlan = async (req, res, next) => {
     let { body } = req
     const date = moment().format('Y-M-D H:mm:ss')
@@ -291,4 +308,112 @@ exports.insPlan = async (req, res, next) => {
     });
 }
 
+
+exports.updatePlan = async (req, res, next) => {
+    let { body } = req
+    const date = moment().format('Y-M-D H:mm:ss')
+    // console.log(body)
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        let sql = `UPDATE add_plan_head SET 
+                        aph_ministry_strategy = '${body.ministry_strategy}',
+                        aph_policy = '${body.policy}', 
+                        aph_kpi = '${body.kpi}',   
+                        aph_strategy = '${body.strategy}',   
+                        aph_result = '${body.result}',
+                        aph_project = '${body.project}',
+                        aph_total_budget = '${body.total_budget}',
+                        aph_period = '${body.period}',
+                        aph_responsible_agency = '${body.responsible_agency}',
+                        aph_upBy = '${body.upBy}', 
+                        aph_upDt = '${date}' 
+                        WHERE id = '${body.id}'`
+        connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results })
+        });
+    });
+}
+
+
+exports.getActivityById = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM add_activity WHERE id_head = '${req.params.id}'`
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+
+exports.getProjectSuccessIndicatorById = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM add_project_success_indicator WHERE id_head = '${req.params.id}'`
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+
+exports.getTargetById = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM add_target WHERE id_head = '${req.params.id}'`
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+
+exports.getBudgetSourceById = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM add_budget_source WHERE id_head = '${req.params.id}'`
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+
+exports.getBudgetUsageDetailById = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM add_budget_usage_detail WHERE id_head = '${req.params.id}'`
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
 //------------------------------------------------------------------------------------------------------------------------------------ จบ เกี่ยวกับ plan

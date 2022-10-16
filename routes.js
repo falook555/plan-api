@@ -16,6 +16,7 @@ module.exports = function (app) {
     })
     // เกี่ยวกับ Login
     app.post('/signin', requireSignin, users.signin)
+    // pull
 
     //------------------------------------- backend Konthorn Thonsap ----------------------------------
     // เกี่ยวกับ USER
@@ -38,9 +39,19 @@ module.exports = function (app) {
 
     // เกี่ยวกับ Plan
     app.post('/add-plan', requireAuth, center.insPlan)
-
+    app.post('/update-plan', requireAuth, center.updatePlan)
+    
     app.get('/get-plan-all', requireAuth, center.getPlanAll)
-    // app.get('/get-plan-by-id/:id', requireAuth, center.getPlanById)
+    app.get('/get-plan-by-id/:id', requireAuth, center.getPlanById)
+    
+    // เกี่ยวกับ Detail Plan
+
+
+    app.get('/get-activity-by-id/:id', requireAuth, center.getActivityById)
+    app.get('/get-project-success-indicator-by-id/:id', requireAuth, center.getProjectSuccessIndicatorById)
+    app.get('/get-target-by-id/:id', requireAuth, center.getTargetById)
+    app.get('/get-budget-source-by-id/:id', requireAuth, center.getBudgetSourceById)
+    app.get('/get-budget-usage-detail-by-id/:id', requireAuth, center.getBudgetUsageDetailById)
 
     //------------------------------------- backend Konthorn Thonsap ----------------------------------
 
