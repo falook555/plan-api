@@ -416,4 +416,176 @@ exports.getBudgetUsageDetailById = (req, res, next) => {
         }
     })
 }
+
+exports.insActivity = async (req, res, next) => {
+    let { body } = req
+    const date = moment().format('Y-M-D H:mm:ss')
+    let data = {
+        'id_head': body.id_head,
+        'dt_activity': body.detail
+    }
+    // console.log(data)
+
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        connection.query(`
+        INSERT INTO add_activity set ?`, data, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
+exports.insPSI = async (req, res, next) => {
+    let { body } = req
+    const date = moment().format('Y-M-D H:mm:ss')
+    let data = {
+        'id_head': body.id_head,
+        'dt_project_success_indicator': body.detail
+    }
+    // console.log(data)
+
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        connection.query(`
+        INSERT INTO add_project_success_indicator set ?`, data, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
+exports.insTarget = async (req, res, next) => {
+    let { body } = req
+    const date = moment().format('Y-M-D H:mm:ss')
+    let data = {
+        'id_head': body.id_head,
+        'dt_target': body.detail
+    }
+    // console.log(data)
+
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        connection.query(`
+        INSERT INTO add_target set ?`, data, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
+exports.insBS = async (req, res, next) => {
+    let { body } = req
+    const date = moment().format('Y-M-D H:mm:ss')
+    let data = {
+        'id_head': body.id_head,
+        'dt_budget_source': body.detail
+    }
+    // console.log(data)
+
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        connection.query(`
+        INSERT INTO add_budget_source set ?`, data, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
+exports.insBUD = async (req, res, next) => {
+    let { body } = req
+    const date = moment().format('Y-M-D H:mm:ss')
+    let data = {
+        'id_head': body.id_head,
+        'dt_budget_usage_detail': body.detail,
+        'dt_budget_usage_price': body.price
+    }
+    // console.log(data)
+
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        connection.query(`
+        INSERT INTO add_budget_usage_detail set ?`, data, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
+exports.deleteActivity = async (req, res, next) => {
+    let { body } = req
+    // console.log(body)
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        let sql = `DELETE FROM add_activity WHERE id ='${body.id}'`
+        connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
+exports.deletePSI = async (req, res, next) => {
+    let { body } = req
+    // console.log(body)
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        let sql = `DELETE FROM add_project_success_indicator WHERE id ='${body.id}'`
+        connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
+exports.deleteTarget = async (req, res, next) => {
+    let { body } = req
+    // console.log(body)
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        let sql = `DELETE FROM add_target WHERE id ='${body.id}'`
+        connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
+exports.deleteBS = async (req, res, next) => {
+    let { body } = req
+    // console.log(body)
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        let sql = `DELETE FROM add_budget_source WHERE id ='${body.id}'`
+        connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
+exports.deleteBUD = async (req, res, next) => {
+    let { body } = req
+    // console.log(body)
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        let sql = `DELETE FROM add_budget_usage_detail WHERE id ='${body.id}'`
+        connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
 //------------------------------------------------------------------------------------------------------------------------------------ จบ เกี่ยวกับ plan
