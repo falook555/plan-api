@@ -39,12 +39,22 @@ module.exports = function (app) {
     // เกี่ยวกับ Plan
     app.post('/add-plan', requireAuth, center.insPlan)
     app.post('/update-plan', requireAuth, center.updatePlan)
-    
+
     app.get('/get-plan-all', requireAuth, center.getPlanAll)
     app.get('/get-plan-by-id/:id', requireAuth, center.getPlanById)
-    
+
     // เกี่ยวกับ Detail Plan
 
+    app.post('/add-activity', requireAuth, center.insActivity)
+    app.post('/add-psi', requireAuth, center.insPSI)
+    app.post('/add-target', requireAuth, center.insTarget)
+    app.post('/add-bs', requireAuth, center.insBS)
+    app.post('/add-bud', requireAuth, center.insBUD)
+    app.post('/delete-activity', requireAuth, center.deleteActivity)
+    app.post('/delete-psi', requireAuth, center.deletePSI)
+    app.post('/delete-target', requireAuth, center.deleteTarget)
+    app.post('/delete-bs', requireAuth, center.deleteBS)
+    app.post('/delete-bud', requireAuth, center.deleteBUD)
 
     app.get('/get-activity-by-id/:id', requireAuth, center.getActivityById)
     app.get('/get-project-success-indicator-by-id/:id', requireAuth, center.getProjectSuccessIndicatorById)
