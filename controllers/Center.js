@@ -308,6 +308,20 @@ exports.insPlan = async (req, res, next) => {
     });
 }
 
+exports.deletePlanHead = async (req, res, next) => {
+    let { body } = req
+    // console.log(body)
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        let sql = `DELETE FROM add_plan_head WHERE id ='${body.id}'`
+        connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results, 'idHead': body.id_head })
+        });
+    });
+}
+
 
 exports.updatePlan = async (req, res, next) => {
     let { body } = req
@@ -329,6 +343,48 @@ exports.updatePlan = async (req, res, next) => {
                         aph_upDt = '${date}' 
                         WHERE id = '${body.id}'`
         connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results })
+        });
+    });
+}
+
+exports.updateStatusPlan = async (req, res, next) => {
+    let { body } = req
+    const date = moment().format('Y-M-D H:mm:ss')
+    // console.log(body)
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        let sql = `UPDATE add_plan_head SET 
+                        aph_status = '${body.status}',
+                        aph_upBy = '${body.username}', 
+                        aph_upDt = '${date}' 
+                        WHERE id = '${body.id}'`
+        connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+            connection.destroy();
+            res.send({ 'status': 'success', 'result': results })
+        });
+    });
+}
+
+exports.approveStatusPlan = async (req, res, next) => {
+    let { body } = req
+    const date = moment().format('Y-M-D H:mm:ss')
+    // console.log(body)
+    let data = {
+        'id_head': body.id,
+        'apv_note': body.note,
+        'apv_upBy': body.username,
+        'apv_upDt': date,
+        'apv_status': body.status,
+    }
+
+    req.getConnection((error, connection) => {
+        if (error) throw error;
+        connection.query(`
+        INSERT INTO approve_detail set ?`, data, function (error, results, fields) {
             if (error) throw error;
             connection.destroy();
             res.send({ 'status': 'success', 'result': results })
