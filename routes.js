@@ -40,6 +40,9 @@ module.exports = function (app) {
     // เกี่ยวกับ Plan
     app.post('/add-plan', requireAuth, center.insPlan)
     app.post('/update-plan', requireAuth, center.updatePlan)
+    app.post('/update-status-plan', requireAuth, center.updateStatusPlan)
+    app.post('/approve-status-plan', requireAuth, center.approveStatusPlan)
+    app.post('/delete-plan-head', requireAuth, center.deletePlanHead)
 
     app.get('/get-plan-all', requireAuth, center.getPlanAll)
     app.get('/get-plan-by-id/:id', requireAuth, center.getPlanById)
