@@ -46,6 +46,7 @@ module.exports = function (app) {
 
     app.get('/get-plan-all', requireAuth, center.getPlanAll)
     app.get('/get-plan-by-id/:id', requireAuth, center.getPlanById)
+    app.get('/get-approve-plan-by-id/:id', requireAuth, center.getApprovePlanById)
 
     // เกี่ยวกับ Detail Plan
 

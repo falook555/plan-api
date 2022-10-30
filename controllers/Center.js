@@ -644,4 +644,21 @@ exports.deleteBUD = async (req, res, next) => {
     });
 }
 
+
+exports.getApprovePlanById = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM approve_detail WHERE id_head = '${req.params.id}' ORDER BY apv_upDt`
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+
 //------------------------------------------------------------------------------------------------------------------------------------ จบ เกี่ยวกับ plan
