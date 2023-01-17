@@ -662,3 +662,73 @@ exports.getApprovePlanById = (req, res, next) => {
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------ จบ เกี่ยวกับ plan
+
+
+//------------------------------------------------------------- เริ่ม select_4exc
+exports.get4excAll = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM select_4exc ORDER BY name`;
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+//------------------------------------------------------------- จบ select_4exc
+//------------------------------------------------------------- เริ่ม select_plan
+exports.getPlanByIdHead = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM select_plan WHERE 4exc_id = '${req.params.id}' ORDER BY name`;
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+//------------------------------------------------------------- จบ select_plan
+//------------------------------------------------------------- เริ่ม select_project
+exports.getProjectByIdHead = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM select_project WHERE 4exc_id = '${req.params.id}' ORDER BY name`;
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+//------------------------------------------------------------- จบ select_project
+//------------------------------------------------------------- เริ่ม select_indicator
+exports.getIndicatorByIdHead = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM select_indicator WHERE 4exc_id = '${req.params.id}' ORDER BY id`;
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+//------------------------------------------------------------- จบ select_indicator
