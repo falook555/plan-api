@@ -788,3 +788,20 @@ exports.getIndicatorByIdHead = (req, res, next) => {
     })
 }
 //------------------------------------------------------------- จบ select_indicator
+//------------------------------------------------------------- เริ่ม select_policy
+exports.getPolicy = (req, res, next) => {
+
+    req.getConnection((err, connection) => {
+        if (err) return console.log(err)
+        try {
+            let sql = `SELECT * FROM select_policy   ORDER BY id`;
+            connection.query(sql, (err, row) => {
+                if (err) return console.log(err)
+                res.send(row)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+//------------------------------------------------------------- จบ select_policy

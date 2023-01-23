@@ -71,6 +71,7 @@ module.exports = function (app) {
     app.get('/get-plan-by-id-head/:id', requireAuth, center.getPlanByIdHead)
     app.get('/get-project-by-id-head/:id', requireAuth, center.getProjectByIdHead)
     app.get('/get-indicator-by-id-head/:id', requireAuth, center.getIndicatorByIdHead)
+    app.get('/get-policy', requireAuth, center.getPolicy)
     //------------------------------------- backend Konthorn Thonsap ----------------------------------
     
     
