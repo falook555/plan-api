@@ -2,6 +2,13 @@ const moment = require('moment')
 const fs = require('fs')
 const md5 = require('md5')
 
+const mysql = require("mysql");
+const config = require("../config");
+const con = mysql.createConnection(config.dbOption);
+const { makeDb } = require('mysql-async-simple');
+
+const db = makeDb();
+db.connect(con);
 //------------------------------------------------------------------------------------------------------------------------------------ เริ่ม เกี่ยวกับ USER
 
 exports.getUserAll = (req, res, next) => {
@@ -250,7 +257,13 @@ exports.getPlanAll = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return console.log(err)
         try {
-            let sql = `SELECT * FROM add_plan_head`;
+            let sql = `SELECT h.*,e.name as exc4,i.name as indicator,p.name project,p1.name as plan1, p2.name as plan2
+            FROM add_plan_head h
+            LEFT JOIN select_4exc e ON e.id = aph_ministry_strategy
+            LEFT JOIN select_indicator i ON i.id = h.aph_kpi 
+            LEFT JOIN select_project p ON p.id = aph_project
+            LEFT JOIN select_plan  p1 ON p1.id = aph_strategy
+            LEFT JOIN select_plan  p2 ON p2.id = aph_policy   `;
             connection.query(sql, (err, row) => {
                 if (err) return console.log(err)
                 res.send(row)
@@ -266,7 +279,13 @@ exports.getPlanById = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return console.log(err)
         try {
-            let sql = `SELECT * FROM add_plan_head WHERE id = '${req.params.id}'`
+            let sql = `SELECT h.*,e.name as exc4,i.name as indicator,p.name project,p1.name as plan1, p2.name as plan2,e.type_name
+            FROM add_plan_head h
+            LEFT JOIN select_4exc e ON e.id = aph_ministry_strategy
+            LEFT JOIN select_indicator i ON i.id = h.aph_kpi 
+            LEFT JOIN select_project p ON p.id = aph_project
+            LEFT JOIN select_plan  p1 ON p1.id = aph_strategy
+            LEFT JOIN select_plan  p2 ON p2.id = aph_policy  WHERE h.id = '${req.params.id}'`
             connection.query(sql, (err, row) => {
                 if (err) return console.log(err)
                 res.send(row)
@@ -353,6 +372,9 @@ exports.updatePlan = async (req, res, next) => {
 exports.updateStatusPlan = async (req, res, next) => {
     let { body } = req
     const date = moment().format('Y-M-D H:mm:ss')
+    const current_year = moment(moment().format("YYYY")).add(543, 'year').format('Y')
+    const sub_current_year = current_year.substring(2, 4)
+    const intYear = parseInt(sub_current_year)
     // console.log(body)
     req.getConnection((error, connection) => {
         if (error) throw error;
@@ -363,10 +385,44 @@ exports.updateStatusPlan = async (req, res, next) => {
                         WHERE id = '${body.id}'`
         connection.query(sql, function (error, results, fields) {
             if (error) throw error;
+            genNO()
             connection.destroy();
             res.send({ 'status': 'success', 'result': results })
         });
+
+        //     //gen รหัสโครงการ
+        async function genNO() {
+            if (body.status == 1 && body.no == null) {
+                let plan_code = 'H2' + body.type_name + intYear
+                let tno = ''
+
+                const resNo = await db.query(con, `SELECT  LPAD(max(aph_no ) +1,3,'0') AS tno FROM add_plan_head `);
+                console.log(resNo[0].tno)
+                if (resNo[0].tno == null) {
+                    tno = '001'
+                } else {
+                    tno = resNo[0].tno
+                }
+
+                plan_code = plan_code + tno
+
+                const resUpdateno = await db.query(con, `UPDATE add_plan_head set  aph_plan_id = '${plan_code}',aph_no ='${tno}'  WHERE id ='${body.id}'  `);
+                console.log(plan_code)
+
+
+            }
+        }
+
+
+        //     //end gen รหัสโครงการ
+
+
+
     });
+
+
+
+
 }
 
 exports.approveStatusPlan = async (req, res, next) => {

@@ -19,6 +19,7 @@
     "md5": "^2.3.0",
     "moment": "^2.29.3",
     "mysql": "^2.16.0",
+    "mysql-async-simple": "^1.0.3",
     "nodemailer": "^6.3.0",
     "nodemon": "^1.19.4",
     "passport": "^0.4.0",
