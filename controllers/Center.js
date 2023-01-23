@@ -257,7 +257,7 @@ exports.getPlanAll = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return console.log(err)
         try {
-            let sql = `SELECT h.*,e.name as exc4,i.name as indicator,p.name project,p1.name as plan1, p2.name as plan2
+            let sql = `SELECT h.*,e.name as exc4,i.name as indicator,h.aph_project as  project,p1.name as plan1, p2.name as plan2
             FROM add_plan_head h
             LEFT JOIN select_4exc e ON e.id = aph_ministry_strategy
             LEFT JOIN select_indicator i ON i.id = h.aph_kpi 
