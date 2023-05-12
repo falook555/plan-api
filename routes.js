@@ -6,6 +6,7 @@ const requireSignin = passport.authenticate('local', { session: false })
 const requireAuth = passport.authenticate('jwt', { session: false })
 const users = require('./controllers/Users')
 const center = require('./controllers/Center')
+const Dashboard = require('./controllers/Dashboard')
 
 module.exports = function (app) {
 
@@ -73,6 +74,17 @@ module.exports = function (app) {
     app.get('/get-indicator-by-id-head/:id', requireAuth, center.getIndicatorByIdHead)
     app.get('/get-policy', requireAuth, center.getPolicy)
     //------------------------------------- backend Konthorn Thonsap ----------------------------------
+
+
+    
+    app.get('/get-money-total', requireAuth, Dashboard.MoneyTotal)
+    app.get('/get-money-success', requireAuth, Dashboard.MoneySuccess)
+    app.get('/get-money-between', requireAuth, Dashboard.MoneyBetween)
+
+    app.get('/get-project-total', requireAuth, Dashboard.ProjectTotal)
+    app.get('/get-project-success', requireAuth, Dashboard.ProjectSuccess)
+    app.get('/get-project-between', requireAuth, Dashboard.ProjectBetween)
+    app.get('/get-project-not', requireAuth, Dashboard.ProjectNot)
     
     
 }
