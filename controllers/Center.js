@@ -257,13 +257,15 @@ exports.getPlanAll = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return console.log(err)
         try {
-            let sql = `SELECT h.*,e.name as exc4,i.name as indicator,h.aph_project as  project,p1.name as plan1, p2.name as plan2
-            FROM add_plan_head h
-            LEFT JOIN select_4exc e ON e.id = aph_ministry_strategy
-            LEFT JOIN select_indicator i ON i.id = h.aph_kpi 
-            LEFT JOIN select_project p ON p.id = aph_project
-            LEFT JOIN select_plan  p1 ON p1.id = aph_strategy
-            LEFT JOIN select_plan  p2 ON p2.id = aph_policy   `;
+            let sql = `SELECT h.*,e.name as exc4,i.name as indicator,h.aph_project as  project,p1.name as plan1, p2.name as plan2,
+            s.dt_budget_source
+                        FROM add_plan_head h
+                        LEFT JOIN select_4exc e ON e.id = aph_ministry_strategy
+                        LEFT JOIN select_indicator i ON i.id = h.aph_kpi 
+                        LEFT JOIN select_project p ON p.id = aph_project
+                        LEFT JOIN select_plan  p1 ON p1.id = aph_strategy
+                        LEFT JOIN select_plan  p2 ON p2.id = aph_policy 
+                                    LEFT JOIN add_budget_source s ON s.id_head = h.id `;
             connection.query(sql, (err, row) => {
                 if (err) return console.log(err)
                 res.send(row)
