@@ -77,14 +77,14 @@ module.exports = function (app) {
 
 
     
-    app.get('/get-money-total', requireAuth, Dashboard.MoneyTotal)
-    app.get('/get-money-success', requireAuth, Dashboard.MoneySuccess)
-    app.get('/get-money-between', requireAuth, Dashboard.MoneyBetween)
+    app.get('/get-money-total', Dashboard.MoneyTotal)
+    app.get('/get-money-success', Dashboard.MoneySuccess)
+    app.get('/get-money-between', Dashboard.MoneyBetween)
 
-    app.get('/get-project-total', requireAuth, Dashboard.ProjectTotal)
-    app.get('/get-project-success', requireAuth, Dashboard.ProjectSuccess)
-    app.get('/get-project-between', requireAuth, Dashboard.ProjectBetween)
-    app.get('/get-project-not', requireAuth, Dashboard.ProjectNot)
+    app.get('/get-project-total', Dashboard.ProjectTotal)
+    app.get('/get-project-success', Dashboard.ProjectSuccess)
+    app.get('/get-project-between', Dashboard.ProjectBetween)
+    app.get('/get-project-not', Dashboard.ProjectNot)
     
     
 }

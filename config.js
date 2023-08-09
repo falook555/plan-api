@@ -1,9 +1,9 @@
 module.exports = {
     secret: '1234',
     dbOption: {
-        host: 'localhost',
+        host: '192.168.1.202',
         user: 'root',
-        password: '',
+        password: 'bandan3225',
         database: 'plan',
         port: '3306'
     }
