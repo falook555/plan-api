@@ -45,7 +45,7 @@ module.exports = function (app) {
     app.post('/approve-status-plan', requireAuth, center.approveStatusPlan)
     app.post('/delete-plan-head', requireAuth, center.deletePlanHead)
 
-    app.get('/get-plan-all', requireAuth, center.getPlanAll)
+    app.get('/get-plan-all', center.getPlanAll)
     app.get('/get-plan-by-id/:id', requireAuth, center.getPlanById)
     app.get('/get-approve-plan-by-id/:id', requireAuth, center.getApprovePlanById)
     
