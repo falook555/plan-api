@@ -262,9 +262,9 @@ exports.getPlanAll = (req, res, next) => {
                         FROM add_plan_head h
                         LEFT JOIN select_4exc e ON e.id = aph_ministry_strategy
                         LEFT JOIN select_indicator i ON i.id = h.aph_kpi 
-                        LEFT JOIN select_project p ON p.id = aph_project
-                        LEFT JOIN select_plan  p1 ON p1.id = aph_strategy
-                        LEFT JOIN select_plan  p2 ON p2.id = aph_policy 
+                        LEFT JOIN select_project p ON p.id = h.aph_project
+                        LEFT JOIN select_plan  p1 ON p1.id = h.aph_strategy
+                        LEFT JOIN select_policy  p2 ON p2.id = h.aph_policy 
                                     LEFT JOIN add_budget_source s ON s.id_head = h.id `;
             connection.query(sql, (err, row) => {
                 if (err) return console.log(err)
